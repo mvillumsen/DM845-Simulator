@@ -9,6 +9,7 @@ Build a simple simulator that simulates data for WhatsHap and run WhatsHap on th
 
 - .VCF-file (like WhatsHap)
     sample: assume it is always 01
+    Probability for mutation e.g. 1/400 + a random number between 0-100
 
 - Number of reads (1000000)
 - Error prob. (10%)
@@ -23,7 +24,7 @@ Build a simple simulator that simulates data for WhatsHap and run WhatsHap on th
 
 
 === PROGRAM ===
-1. Read both files
+1. Read both files (FASTA and .VCF)
 2. Save a copy of the FASTA-file in array/string (the chromosome)
 3. Generate an altered version of the chromosome based on the .VCF-file
 4. Generate the reads based on the below algorithm
@@ -31,8 +32,7 @@ Build a simple simulator that simulates data for WhatsHap and run WhatsHap on th
 
 === ALGORITHM ===
 1. Choose chrm_1 or chrm_2 at random (one is without errors and one is with)
-2. Choose a start position at random
-3. Go over all letters in the read and change each letter with the given probability
-    Probability for mutation: E.g. 1/400 + a random number between 0-100
-4. Repeat for the number of reads.
+2. Choose a start position at random (length of chromosome - length of read)
+3. Go over all letters in the read and change each letter with the given probability (10%)
+4. Repeat for the number of reads
 
