@@ -21,6 +21,8 @@ Build a simple simulator that simulates data for WhatsHap and run WhatsHap on th
 - .sam-file
     @: header
     SN: should correspond to the VCF-file
+- Convert to .bam with:
+    samtools view -bS sample.sam > sample.bam
 
 
 === PROGRAM ===
