@@ -33,7 +33,7 @@ Build a simple simulator that simulates data for WhatsHap and run WhatsHap on th
 5. Output as a .sam-file
 
 === ALGORITHM ===
-1. Choose chrm_1 or chrm_2 at random (one is without errors and one is with)
+1. Choose chrm_1 or chrm_2 at random (one is without mutations and one is with)
 2. Choose a start position at random (length of chromosome - length of read)
 3. Go over all letters in the read and change each letter with the given probability (10%)
 4. Repeat for the number of reads
