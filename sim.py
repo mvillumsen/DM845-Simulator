@@ -1,0 +1,130 @@
+import sys
+from random import random, randint
+
+"""
+Read a VCF file and outputs a dictionary mapping positions to tuples of (ref, alt).
+
+Input:
+    Path to VCF file
+
+Output:
+    Dictionary mapping position to reference and alteration, i.e. { pos:( ref, alt ) ... }
+"""
+def readVCF(vcf):
+    readVCF = open(vcf, "r").readlines()
+    vcfList = [ line.split("\t") for line in readVCF if line[0] != '#' ]
+
+    return { int(ele[1]):(ele[3], ele[4]) for ele in vcfList }
+
+
+"""
+Generate an altered version (one with mutations) of the chromosome given as
+input based on the VCF file given as input.
+
+Input:
+    fasta: .FA file as string
+    vcf: vcf dictionary generated with readVCF()
+
+Output:
+    chrm2 as a string generated based on input files
+"""
+def generateChrm(fasta, vcf):
+    chrm2 = list(fasta)
+
+    for pos in vcf:
+        ref = vcf[pos][0]
+        alt = vcf[pos][1]
+        if chrm2[pos] == vcf[pos][0]:
+            chrm2[pos] = alt
+
+    return ''.join(chrm2)
+
+
+"""
+Generate reads based on the two chromosomes given as input. This is done
+as follows:
+    - Choose chrm1 or chrm2 at random
+    - Choose a start position at random
+    - Go over all letters in the read and change each letter with given prob.
+    - Repeat for the number of reads
+
+Input:
+    chrm1: A string consisting of the reference chromosome
+    chrm2: A string consisting of the mutated chromosome
+    numberReads: The number of reads we want to generate
+    readLength: The length of the reads
+    errorProb: The error probability
+
+Output:
+    A list containing all reads generated as strings
+"""
+def generateReads(chrm1, chrm2, numberReads=1000000, readLength=1000, errorProb=0.1):
+
+    reads = []
+    nucleotides = ['A', 'T', 'C', 'G']
+
+    for i in range(numberReads):
+        currRead = []
+        r = random()
+        index = randint(0, len(chrm1) - readLength - 1)
+
+        if r < 0.5:
+            for a in range(readLength):
+                ind = index + a
+                if random() < errorProb:
+                    n = [ nuc for nuc in nucleotides if nuc != chrm1[ind] ]
+                    currRead.append(n[randint(0,2)])
+                else:
+                    currRead.append(chrm1[ind])
+            reads.append(''.join(currRead))
+        else:
+            for b in range(readLength):
+                ind = index + b
+                if random() < errorProb:
+                    n = [ nuc for nuc in nucleotides if nuc != chrm2[ind] ]
+                    currRead.append(n[randint(0,2)])
+                else:
+                    currRead.append(chrm2[ind])
+            reads.append(''.join(currRead))
+
+    return reads
+
+
+"""
+Takes a list of reads and generates a SAM file and saves it to the given path.
+
+Input:
+    reads: A list of reads
+    pathOut: The output path to which the SAM file is saved
+"""
+def generateSAM(reads):
+    return 0
+
+
+"""
+## Input:
+    argv[0]: .FA file
+    argv[1]: .VCF file
+    argv[2]: A path to which the SAM file is saved
+
+Output:
+    .SAM file
+"""
+def main(argv):
+    ## Save FASTA-file as string
+    fastaList = open(argv[0], "r").readlines()
+    chrm1 = ''.join(fastaList[1:]).replace("\n", "").replace("N", "").upper()
+
+    ## Generate altered version based on VCF
+    vcf_dict = readVCF(argv[1])
+    chrm2 = generateChrm(chrm1, vcf_dict)
+
+    ## Generate reads based on algorithm
+    reads = generateReads(chrm1, chrm2)
+
+    ## Output as .SAM
+    #generateSAM(reads)
+
+if __name__ == "__main__":
+    main(sys.argv[1:])
+
