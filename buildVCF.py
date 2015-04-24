@@ -19,7 +19,7 @@ def main(argv):
     fileIn = argv[0]
     fileOut = argv[1]
     fastaList = open(fileIn, "r").readlines()
-    chrom = fastaList[0]
+    chrom = fastaList[0].replace("\n", "")
     sample = '0/1'
     filter = 'PASS'
     info = '.'
@@ -35,7 +35,8 @@ def main(argv):
     for i in range(len(fasta)):
         #prob = 0.0025
         #if random() < prob:
-        if i % (400+rand) == 0:
+        if i % (400+rand) == 0 and i != 0:
+            id = i
             rand = randint(0, 100)
             n = [ nuc for nuc in nucleotides if nuc != fasta[i] ]
             alt = n[randint(0,2)]
@@ -48,7 +49,7 @@ def main(argv):
 
     for line in listOut:
         for ele in line:
-            fo.write(ele+"\t")
+            fo.write(str(ele) + "\t")
         fo.write("\n")
 
     fo.close()
