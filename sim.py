@@ -76,7 +76,7 @@ def generateReads(chrm1, chrm2, numberReads=1000000, readLength=1000, errorProb=
                     currRead.append(n[randint(0,2)])
                 else:
                     currRead.append(chrm1[ind])
-            reads.append(''.join(currRead))
+            reads.append( (index, ''.join(currRead)) )
         else:
             for b in range(readLength):
                 ind = index + b
@@ -85,7 +85,7 @@ def generateReads(chrm1, chrm2, numberReads=1000000, readLength=1000, errorProb=
                     currRead.append(n[randint(0,2)])
                 else:
                     currRead.append(chrm2[ind])
-            reads.append(''.join(currRead))
+            reads.append( (index, ''.join(currRead)) )
 
     return reads
 
@@ -97,15 +97,41 @@ Input:
     reads: A list of reads
     pathOut: The output path to which the SAM file is saved
 """
-def generateSAM(reads):
-    return 0
+def generateSAM(reads, chrm):
+    ## Header for .sam-file
+    #sam = []
+    sam = ['@HD VN:1.4  GO:none SO:coordinate','@SQ SN:ref  LN:123']
+
+    ## Initialize static values
+    RNAME = 'ref'
+    RNEXT = '*'
+    PNEXT = '0'
+    MAPQ = '255' # TODO: Should this be calculated? '255' indicates that the value is not available
+    TLEN = '%d' % len(chrm) # len of crhm from which I generate reads
+    FLAG = '0' # TODO: Is this right?
+    QUAL = '*' # TODO: Is this right?
+
+    ## Generate lines for .sam-file
+    for read in reads:
+        POS = '%d' % read[0]
+        if read[1] == chrm[int(POS)]:
+            CIGAR = '='
+        else:
+            CIGAR = 'X'
+        QNAME = 'r00%d' % read[0]
+        SEQ = read[1]
+
+        ## Append line to sam list
+        sam.append('%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s' % (QNAME, FLAG, RNAME, POS, MAPQ, CIGAR, RNEXT, PNEXT, TLEN, SEQ, QUAL) )
+
+    return sam
 
 
 """
 ## Input:
     argv[0]: .FA file
     argv[1]: .VCF file
-    argv[2]: A path to which the SAM file is saved
+    argv[2]: Output path (i.e. path/name of .sam-file)
 
 Output:
     .SAM file
@@ -120,10 +146,18 @@ def main(argv):
     chrm2 = generateChrm(chrm1, vcf_dict)
 
     ## Generate reads based on algorithm
-    reads = generateReads(chrm1, chrm2)
+    # default: generateReads(chrm1, chrm2, numberReads=1000000, readLength=1000, errorProb=0.1)
+    reads = generateReads(chrm1, chrm2, 1000, 100, 0.1)
 
     ## Output as .SAM
-    #generateSAM(reads)
+    sam = generateSAM(reads, chrm1)
+
+    ## Write output to .sam-file
+    fileOut = open(argv[2], "w")
+    for line in sam:
+        fileOut.write(line)
+        fileOut.write("\n")
+    fileOut.close()
 
 if __name__ == "__main__":
     main(sys.argv[1:])
