@@ -99,7 +99,8 @@ Input:
 """
 def generateSAM(reads, chrm):
     ## Header for .sam-file
-    sam = ['@HD VN:1.4  GO:none SO:coordinate','@SQ SN:ref  LN:123']
+    sam = ['@HD\tVN:1.4\tSO:coordinate']
+    sam.append('@SQ\tSN:chr1\tLN:%d' % len(chrm))
 
     ## Initialize static values
     RNAME = 'ref'
