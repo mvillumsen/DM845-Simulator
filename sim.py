@@ -99,8 +99,7 @@ Input:
 """
 def generateSAM(reads, chrm):
     ## Header for .sam-file
-    #sam = []
-    sam = ['@HD VN:1.4  GO:none SO:coordinate','@SQ SN:ref  LN:123']
+    header = ['@HD VN:1.0  GO:none']
 
     ## Initialize static values
     RNAME = 'ref'
@@ -112,6 +111,7 @@ def generateSAM(reads, chrm):
     QUAL = '*' # TODO: Is this right?
 
     ## Generate lines for .sam-file
+    sam = []
     for read in reads:
         POS = '%d' % read[0]
         if read[1] == chrm[int(POS)]:
