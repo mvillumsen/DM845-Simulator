@@ -148,7 +148,7 @@ def main(argv):
 
     ## Generate reads based on algorithm
     # default: generateReads(chrm1, chrm2, numberReads=1000000, readLength=1000, errorProb=0.1)
-    reads = generateReads(chrm1, chrm2, 1000, 100, 0.1)
+    reads = generateReads(chrm1, chrm2)
 
     ## Output as .SAM
     sam = generateSAM(reads, chrm1)
