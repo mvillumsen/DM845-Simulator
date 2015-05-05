@@ -13,7 +13,7 @@ Output:
 def readVCF(vcf):
     readVCF = open(vcf, "r").readlines()
     vcfList = [ line.split("\t") for line in readVCF if line[0] != '#' ]
-
+    
     return { int(ele[1]):(ele[3], ele[4]) for ele in vcfList }
 
 
@@ -99,10 +99,12 @@ Input:
 """
 def generateSAM(reads, chrm):
     ## Header for .sam-file
-    header = ['@HD VN:1.0  GO:none']
+    sam = ['@HD\tVN:1.4\tSO:coordinate']     
+    sam.append('@SQ\tSN:chr1\tLN:%d' % len(chrm))
+    sam.append('@RG\tID:1\tSM:Venter')
 
     ## Initialize static values
-    RNAME = 'ref'
+    RNAME = 'chr1'
     RNEXT = '*'
     PNEXT = '0'
     MAPQ = '255' # TODO: Should this be calculated? '255' indicates that the value is not available
@@ -111,13 +113,12 @@ def generateSAM(reads, chrm):
     QUAL = '*' # TODO: Is this right?
 
     ## Generate lines for .sam-file
-    sam = []
     for read in reads:
         POS = '%d' % read[0]
         if read[1] == chrm[int(POS)]:
-            CIGAR = '='
+            CIGAR = '%d=' % len(read[1])
         else:
-            CIGAR = 'X'
+            CIGAR = '%dX' % len(read[1])
         QNAME = 'r00%d' % read[0]
         SEQ = read[1]
 

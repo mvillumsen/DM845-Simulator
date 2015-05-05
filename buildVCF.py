@@ -19,7 +19,7 @@ def main(argv):
     fileIn = argv[0]
     fileOut = argv[1]
     fastaList = open(fileIn, "r").readlines()
-    chrom = fastaList[0].replace("\n", "")
+    chrom = fastaList[0].replace("\n", "").replace(">", "")
     sample = '0/1'
     filter = 'PASS'
     info = '.'
