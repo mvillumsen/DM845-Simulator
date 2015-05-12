@@ -13,7 +13,7 @@ Output:
 def readVCF(vcf):
     readVCF = open(vcf, "r").readlines()
     vcfList = [ line.split("\t") for line in readVCF if line[0] != '#' ]
-    
+
     return { int(ele[1]):(ele[3], ele[4]) for ele in vcfList }
 
 
@@ -32,9 +32,8 @@ def generateChrm(fasta, vcf):
     chrm2 = list(fasta)
 
     for pos in vcf:
-        ref = vcf[pos][0]
-        alt = vcf[pos][1]
-        if chrm2[pos] == ref:
+        ref, alt = vcf[pos][0], vcf[pos][1]
+        if chrm2[pos] == vcf[pos][0]:
             chrm2[pos] = alt
 
     return ''.join(chrm2)
@@ -58,37 +57,49 @@ Input:
 Output:
     A list containing all reads generated as strings
 """
-def generateReads(chrm1, chrm2, numberReads=100, readLength=1000, errorProb=0.1):
+def generateAllReads(chrm1, chrm2, numberReads, readLength, errorProb):
 
     reads = []
     nucleotides = ['A', 'T', 'C', 'G']
 
     for i in range(numberReads):
-        currRead = []
         r = random()
         index = randint(0, len(chrm1) - readLength - 1)
 
         if r < 0.5:
-            for a in range(readLength):
-                ind = index + a
-                if random() < errorProb:
-                    n = [ nuc for nuc in nucleotides if nuc != chrm1[ind] ]
-                    currRead.append(n[randint(0,2)])
-                else:
-                    currRead.append(chrm1[ind])
-            reads.append( (index, ''.join(currRead)) )
+            reads.append( (index, ''.join(generateRead(chrm1, readLength, index, errorProb)) ) )
         else:
-            for b in range(readLength):
-                ind = index + b
-                if random() < errorProb:
-                    n = [ nuc for nuc in nucleotides if nuc != chrm2[ind] ]
-                    currRead.append(n[randint(0,2)])
-                else:
-                    currRead.append(chrm2[ind])
-            reads.append( (index, ''.join(currRead)) )
+            reads.append( (index, ''.join(generateRead(chrm2, readLength, index, errorProb) ) ) )
 
     return reads
 
+
+"""
+Generate a single read. Used in generateAllReads().
+
+Input:
+    chrm: The chromosome to use
+    readLength: The read length
+    index: The index of the chromosome from which the read should start
+    errorProb: The sequencing error probability
+
+Output:
+    A list containing the read generated
+"""
+def generateRead(chrm, readLength, index, errorProb):
+
+    nucleotides = ['A', 'T', 'C', 'G']
+    currRead = []
+
+    for i in range(readLength):
+        ind = index + i
+        if random() < errorProb:
+            n = [ nuc for nuc in nucleotides if nuc != chrm[ind] ]
+            currRead.append(n[randint(0,2)])
+        else:
+            currRead.append(chrm[ind])
+
+    return currRead
 
 """
 Takes a list of reads and generates a SAM file and saves it to the given path.
@@ -144,11 +155,10 @@ def main(argv):
     chrm2 = generateChrm(chrm1, vcf_dict)
 
     ## Generate reads based on algorithm
-    # default: generateReads(chrm1, chrm2, numberReads=1000000, readLength=1000, errorProb=0.1)
-    reads = generateReads(chrm1, chrm2)
+    reads = generateAllReads(chrm1, chrm2, numberReads=1000, readLength=1000, errorProb=0.1)
 
     ## Output as .SAM
-    sam = generateSAM(reads, chrm1)
+    sam = generateSAM(reads, chrm1, readLength=1000)
 
     ## Write output to .sam-file
     fileOut = open(argv[2], "w")
