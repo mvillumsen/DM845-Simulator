@@ -28,7 +28,7 @@ def main(argv):
 
     nucleotides = ['A', 'T', 'C', 'G']
     header = ['##fileformat=VCFv4.1', '##FORMAT=<ID=GT,Number=1,Type=String,Description="Genotype">']
-    listOut = [["#CHROM", "POS", "ID", "REF", "ALT", "QUAL", "FILTER", "INFO", "FORMAT", "Venter"]]
+    listOut = [["#CHROM", "POS", "ID", "REF", "ALT", "QUAL", "FILTER", "INFO", "FORMAT", "sample"]]
 
     rand = randint(0, 100)
 

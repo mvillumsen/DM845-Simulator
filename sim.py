@@ -34,7 +34,7 @@ def generateChrm(fasta, vcf):
     for pos in vcf:
         ref = vcf[pos][0]
         alt = vcf[pos][1]
-        if chrm2[pos] == vcf[pos][0]:
+        if chrm2[pos] == ref:
             chrm2[pos] = alt
 
     return ''.join(chrm2)
@@ -58,7 +58,7 @@ Input:
 Output:
     A list containing all reads generated as strings
 """
-def generateReads(chrm1, chrm2, numberReads=1000000, readLength=1000, errorProb=0.1):
+def generateReads(chrm1, chrm2, numberReads=100, readLength=1000, errorProb=0.1):
 
     reads = []
     nucleotides = ['A', 'T', 'C', 'G']
@@ -97,29 +97,26 @@ Input:
     reads: A list of reads
     pathOut: The output path to which the SAM file is saved
 """
-def generateSAM(reads, chrm):
+def generateSAM(reads, chrm, readLength=1000):
     ## Header for .sam-file
-    sam = ['@HD\tVN:1.4\tSO:coordinate']     
+    sam = ['@HD\tVN:1.4\tGO:none\tSO:coordinate']     
     sam.append('@SQ\tSN:chr1\tLN:%d' % len(chrm))
-    sam.append('@RG\tID:1\tSM:Venter')
+    sam.append('@RG\tID:1\tPL:Platform\tLB:library\tSM:sample')
 
     ## Initialize static values
     RNAME = 'chr1'
-    RNEXT = '*'
+    RNEXT = '='
     PNEXT = '0'
     MAPQ = '255' # TODO: Should this be calculated? '255' indicates that the value is not available
     TLEN = '%d' % len(chrm) # len of crhm from which I generate reads
     FLAG = '0' # TODO: Is this right?
-    QUAL = '*' # TODO: Is this right?
+    QUAL = 'J'*readLength 
+    CIGAR = '%dM' % readLength
 
     ## Generate lines for .sam-file
     for read in reads:
         POS = '%d' % read[0]
-        if read[1] == chrm[int(POS)]:
-            CIGAR = '%d=' % len(read[1])
-        else:
-            CIGAR = '%dX' % len(read[1])
-        QNAME = 'r00%d' % read[0]
+	QNAME = 'r00%d' % read[0]
         SEQ = read[1]
 
         ## Append line to sam list
@@ -162,4 +159,3 @@ def main(argv):
 
 if __name__ == "__main__":
     main(sys.argv[1:])
-

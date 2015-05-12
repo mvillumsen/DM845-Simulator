@@ -1,5 +1,5 @@
 - Convert sort .sam and convert to .bam
-	samtools view -uS chr1.sam | samtools sort - chr1.sorted
+	samtools view -bS chr1.sam | samtools sort - chr1.sorted
 
 - Run whatshap
 	python3 -m whatshap chr1.vcf chr1.sorted.bam > phased.vcf
