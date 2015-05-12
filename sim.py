@@ -149,9 +149,9 @@ Output:
     .SAM file
 """
 def main(argv):
-    numberReads = argv[2]
-    readLength = argv[3]
-    errorProb = argv[4]    
+    numberReads = int(argv[2])
+    readLength = int(argv[3])
+    errorProb = float(argv[4])
 
     ## Save FASTA-file as string
     fastaList = open(argv[0], "r").readlines()
