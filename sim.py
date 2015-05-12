@@ -140,12 +140,19 @@ def generateSAM(reads, chrm, readLength=1000):
 ## Input:
     argv[0]: .FA file
     argv[1]: .VCF file
-    argv[2]: Output path (i.e. path/name of .sam-file)
+    argv[2]: Number of reads
+    argv[3]: Length of reads
+    argv[4]: Sequencing error probability
+    argv[5]: Output path (i.e. path/name of .sam-file)
 
 Output:
     .SAM file
 """
 def main(argv):
+    numberReads = argv[2]
+    readLength = argv[3]
+    errorProb = argv[4]    
+
     ## Save FASTA-file as string
     fastaList = open(argv[0], "r").readlines()
     chrm1 = ''.join(fastaList[1:]).replace("\n", "").replace("N", "").upper()
@@ -155,13 +162,13 @@ def main(argv):
     chrm2 = generateChrm(chrm1, vcf_dict)
 
     ## Generate reads based on algorithm
-    reads = generateAllReads(chrm1, chrm2, numberReads=1000, readLength=1000, errorProb=0.1)
+    reads = generateAllReads(chrm1, chrm2, numberReads, readLength, errorProb)
 
     ## Output as .SAM
-    sam = generateSAM(reads, chrm1, readLength=1000)
+    sam = generateSAM(reads, chrm1, readLength)
 
     ## Write output to .sam-file
-    fileOut = open(argv[2], "w")
+    fileOut = open(argv[5], "w")
     for line in sam:
         fileOut.write(line)
         fileOut.write("\n")
