@@ -3,3 +3,8 @@
 
 - Run whatshap
 	python3 -m whatshap chr1.vcf chr1.sorted.bam > phased.vcf
+
+- Measure time/memory
+/usr/bin/time -v python....
+/usr/bin/time -f '%P %M %E' python....
+
