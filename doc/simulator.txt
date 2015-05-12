@@ -1,0 +1,40 @@
+Build a simple simulator that simulates data for WhatsHap and run WhatsHap on the data
+
+=== INPUT ===
+- FASTA-file (Reference with one chromosome)
+    Assume no Ns
+    All letters should be in uppercase
+    Header starts with ">"
+    The rest
+
+- .VCF-file (like WhatsHap)
+    sample: assume it is always 01
+    Probability for mutation e.g. 1/400 + a random number between 0-100
+
+- Number of reads (1000000)
+- Error prob. (10%)
+- Read length (1000)
+
+
+=== OUTPUT ===
+- (See testdata from WhatsHap)
+- .sam-file
+    @: header
+    SN: should correspond to the VCF-file
+- Convert to .bam with:
+    samtools view -bS sample.sam > sample.bam
+
+
+=== PROGRAM ===
+1. Read both files (FASTA and .VCF)
+2. Save a copy of the FASTA-file in array/string (the chromosome)
+3. Generate an altered version of the chromosome based on the .VCF-file
+4. Generate the reads based on the below algorithm
+5. Output as a .sam-file
+
+=== ALGORITHM ===
+1. Choose chrm_1 or chrm_2 at random (one is without mutations and one is with)
+2. Choose a start position at random (length of chromosome - length of read)
+3. Go over all letters in the read and change each letter with the given probability (10%)
+4. Repeat for the number of reads
+
