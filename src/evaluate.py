@@ -33,7 +33,7 @@ def main(origVCF, phasedVCF):
 		else:
 			diff += 1
 
-	fileOut = 'output/results/' + phasedVCF.split("/")[-1].split(".")[0] + '.txt'
+	fileOut = '../output/results/' + phasedVCF.split("/")[-1].split(".")[0] + '.txt'
 	f = open(fileOut, "w")
 	f.write('matches\tdiffs\n')
 	f.write('%d\t%d\n' % (match, diff))
