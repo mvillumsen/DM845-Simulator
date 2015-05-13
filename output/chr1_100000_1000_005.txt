@@ -1,3 +1,26 @@
+INFO: This is WhatsHap 0.1.dev0 running under Python 3.4.0
+INFO: Found 1 sample(s) in the VCF file.
+INFO: Working on chromosome chr1
+INFO: Read 1007004 variants
+INFO: Reading the BAM file ...
+INFO: 99967 reads found
+INFO: Found 344830 SNP positions
+INFO: Skipped 325 reads that only cover one SNP
+INFO: 227 out of 344830 variant positions (0%) do not have a read connecting them to another variant and are thus unphasable
+INFO: After coverage reduction: Using 99642 of 99642 (100.0%) reads that cover two or more SNPs
+INFO: Best-case phasing would result in 69802 non-singleton phased blocks (70029 in total)
+INFO: ... after coverage reduction: 69802 non-singleton phased blocks (69802 in total)
+INFO: Phasing the variants (using 99642 reads)...
+INFO: MEC score of phasing: 89585
+INFO: No. of variants considered for phasing: 344603
+INFO: No. of variants that were phased: 342848
+INFO: No. of phased blocks: 69802
+INFO: Chromosome chr1 finished
+INFO: == SUMMARY ==
+INFO: Best-case phasing would result in 69802 non-singleton phased blocks (70029 in total)
+INFO: ... after coverage reduction: 69802 non-singleton phased blocks (69802 in total)
+INFO: Elapsed time: 87.5s
+
 	Command being timed: "python3 -m whatshap --ignore-read-groups data/chr1.vcf data/bam/chr1_100000_1000_005.sorted.bam"
 	User time (seconds): 87.47
 	System time (seconds): 0.73
