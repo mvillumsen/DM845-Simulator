@@ -1,0 +1,48 @@
+INFO: This is WhatsHap 0.1.dev0 running under Python 3.4.0
+INFO: BAM index not found, creating it now.
+INFO: Found 1 sample(s) in the VCF file.
+INFO: Working on chromosome chr1
+INFO: Read 1007004 variants
+INFO: Reading the BAM file ...
+INFO: 99118 reads found
+INFO: Found 190722 SNP positions
+INFO: Skipped 27025 reads that only cover one SNP
+INFO: 22915 out of 190722 variant positions (12%) do not have a read connecting them to another variant and are thus unphasable
+INFO: After coverage reduction: Using 72093 of 72093 (100.0%) reads that cover two or more SNPs
+INFO: Best-case phasing would result in 62916 non-singleton phased blocks (85831 in total)
+INFO: ... after coverage reduction: 62916 non-singleton phased blocks (62916 in total)
+INFO: Phasing the variants (using 72093 reads)...
+INFO: MEC score of phasing: 16728
+INFO: No. of variants considered for phasing: 167807
+INFO: No. of variants that were phased: 167443
+INFO: No. of phased blocks: 62916
+INFO: Chromosome chr1 finished
+INFO: == SUMMARY ==
+INFO: Best-case phasing would result in 62916 non-singleton phased blocks (85831 in total)
+INFO: ... after coverage reduction: 62916 non-singleton phased blocks (62916 in total)
+INFO: Elapsed time: 78.2s
+
+
+	Command being timed: "python3 -m whatshap --ignore-read-groups data/chr1.vcf data/bam/chr1_100000_500_005.sorted.bam"
+	User time (seconds): 78.21
+	System time (seconds): 0.48
+	Percent of CPU this job got: 99%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 1:18.74
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 373268
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 0
+	Minor (reclaiming a frame) page faults: 310570
+	Voluntary context switches: 5
+	Involuntary context switches: 146
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 96880
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
