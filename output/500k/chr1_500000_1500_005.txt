@@ -22,26 +22,26 @@ INFO: Best-case phasing would result in 28662 non-singleton phased blocks (28663
 INFO: ... after coverage reduction: 28662 non-singleton phased blocks (28662 in total)
 INFO: Elapsed time: 175.3s
 
-	Command being timed: "python3 -m whatshap --ignore-read-groups data/chr1.vcf data/bam/chr1_500000_1500_005.sorted.bam"
-	User time (seconds): 176.03
-	System time (seconds): 1.27
-	Percent of CPU this job got: 99%
-	Elapsed (wall clock) time (h:mm:ss or m:ss): 2:57.41
-	Average shared text size (kbytes): 0
-	Average unshared data size (kbytes): 0
-	Average stack size (kbytes): 0
-	Average total size (kbytes): 0
-	Maximum resident set size (kbytes): 1290584
-	Average resident set size (kbytes): 0
-	Major (requiring I/O) page faults: 0
-	Minor (reclaiming a frame) page faults: 740551
-	Voluntary context switches: 5
-	Involuntary context switches: 838
-	Swaps: 0
-	File system inputs: 0
-	File system outputs: 140504
-	Socket messages sent: 0
-	Socket messages received: 0
-	Signals delivered: 0
-	Page size (bytes): 4096
-	Exit status: 0
+Command being timed: "python3 -m whatshap --ignore-read-groups data/chr1.vcf data/bam/chr1_500000_1500_005.sorted.bam"
+User time (seconds): 176.03
+System time (seconds): 1.27
+Percent of CPU this job got: 99%
+Elapsed (wall clock) time (h:mm:ss or m:ss): 2:57.41
+Average shared text size (kbytes): 0
+Average unshared data size (kbytes): 0
+Average stack size (kbytes): 0
+Average total size (kbytes): 0
+Maximum resident set size (kbytes): 1290584
+Average resident set size (kbytes): 0
+Major (requiring I/O) page faults: 0
+Minor (reclaiming a frame) page faults: 740551
+Voluntary context switches: 5
+Involuntary context switches: 838
+Swaps: 0
+File system inputs: 0
+File system outputs: 140504
+Socket messages sent: 0
+Socket messages received: 0
+Signals delivered: 0
+Page size (bytes): 4096
+Exit status: 0
