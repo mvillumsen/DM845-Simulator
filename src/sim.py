@@ -1,6 +1,7 @@
 import sys
 from random import random, randint
 
+
 """
 Read a VCF file and outputs a dictionary mapping positions to tuples of (ref, alt).
 
@@ -101,33 +102,35 @@ def generateRead(chrm, readLength, index, errorProb):
 
     return currRead
 
+
 """
 Takes a list of reads and generates a SAM file and saves it to the given path.
 
 Input:
     reads: A list of reads
-    pathOut: The output path to which the SAM file is saved
+    chrmLength: The length of the chromosome
 """
-def generateSAM(reads, chrm, readLength=1000):
+def generateSAM(reads, chrmLength, readLength=1000):
+
     ## Header for .sam-file
     sam = ['@HD\tVN:1.4\tGO:none\tSO:coordinate']     
-    sam.append('@SQ\tSN:chr1\tLN:%d' % len(chrm))
+    sam.append('@SQ\tSN:chr1\tLN:%d' % chrmLength)
     sam.append('@RG\tID:1\tPL:Platform\tLB:library\tSM:sample')
 
     ## Initialize static values
+    FLAG = '0'
     RNAME = 'chr1'
+    MAPQ = '255' # '255' indicates that the value is not available
+    CIGAR = '%dM' % readLength
     RNEXT = '='
     PNEXT = '0'
-    MAPQ = '255' # TODO: Should this be calculated? '255' indicates that the value is not available
-    TLEN = '%d' % len(chrm) # len of crhm from which I generate reads
-    FLAG = '0' # TODO: Is this right?
+    TLEN = '%d' % chrmLength # len of crhm from which the reads are generated
     QUAL = 'J'*readLength 
-    CIGAR = '%dM' % readLength
 
     ## Generate lines for .sam-file
     for read in reads:
         POS = '%d' % read[0]
-	QNAME = 'r00%d' % read[0]
+        QNAME = 'r00%d' % read[0]
         SEQ = read[1]
 
         ## Append line to sam list
@@ -137,6 +140,8 @@ def generateSAM(reads, chrm, readLength=1000):
 
 
 """
+Simulate DNA reads from the given parameters and saves the simulated reads
+as a .sam-file.
 ## Input:
     argv[0]: .FA file
     argv[1]: .VCF file
@@ -146,7 +151,8 @@ def generateSAM(reads, chrm, readLength=1000):
     argv[5]: Output path (i.e. path/name of .sam-file)
 
 Output:
-    .SAM file
+    .sam-file: Saves the simulated reads to a Sequence Alignment/Map-file, following the
+    conventions of the SAM-format
 """
 def main(argv):
     numberReads = int(argv[2])
@@ -164,8 +170,8 @@ def main(argv):
     ## Generate reads based on algorithm
     reads = generateAllReads(chrm1, chrm2, numberReads, readLength, errorProb)
 
-    ## Output as .SAM
-    sam = generateSAM(reads, chrm1, readLength)
+    ## Output as .sam
+    sam = generateSAM(reads, len(chrm1), readLength)
 
     ## Write output to .sam-file
     fileOut = open(argv[5], "w")

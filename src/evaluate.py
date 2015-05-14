@@ -1,5 +1,6 @@
 import sys
 
+
 """
 Read two VCF-files and writes out the number of matches and mismatches.
 
@@ -42,4 +43,3 @@ def main(origVCF, phasedVCF):
 
 if __name__ == "__main__":
 	main(sys.argv[1], sys.argv[2])
-

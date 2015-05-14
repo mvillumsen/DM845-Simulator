@@ -45,25 +45,28 @@ colnames(reads.500k) <- errorProb
 
 ## Create and save plot for 100k reads
 png("../output/plots/plot100k.png", width = 1024, height = 1024)
+par(mar = c(5,5,5,5))
 plot(rownames(reads.100k), reads.100k[,1], type = "b", col = "red",
-     xlab = "Read Length", ylab = "Match in %", ylim=c(50, 85), pch=16)
+     xlab = "Read Length", ylab = "Match in %", ylim=c(50, 85), pch=16, cex.lab=2,
+     cex.axis=1.5)
 lines(rownames(reads.100k), reads.100k[,2], type = "b", col = "blue", pch=16)
 lines(rownames(reads.100k), reads.100k[,3], type = "b", col = "green", pch=16)
-title("Match with 100k Reads")
+title("Match with 100k Reads", cex.main=2, cex.lab=2)
 legend("topright", colnames(reads.100k), pch=16, col=c('red', 'blue', 'green'),
-       bty='o', cex=1, title = "Error Probability")
+       bty='o', cex=2, title = "Error Probability")
 dev.off()
 
-png("../output/plots/plot500k.png", width = 1024, height = 1024)
 ## Create and save plot for 500k reads
+png("../output/plots/plot500k.png", width = 1024, height = 1024)
+par(mar = c(5,5,5,5))
 plot(rownames(reads.500k), reads.500k[,2], type="b", col="red",
-     xlab = "Read Length", ylab = "Match in %", ylim=c(0,50), pch=16)
-axis(1, at=c(500,1000,1500))
+     xlab = "Read Length", ylab = "Match in %", ylim=c(0,50), pch=16, cex.lab=2,
+     cex.axis=1.5)
 lines(rownames(reads.500k), reads.500k[,1], type="b", col="blue", pch=16)
 lines(rownames(reads.500k), reads.500k[,3], type="b", col="green", pch=16)
-title("Match with 500k Reads")
+title("Match with 500k Reads", cex.main=2)
 legend("topright", colnames(reads.500k), pch=16, col=c('red', 'blue', 'green'),
-       bty='o', cex=1, title = "Error Probability")
+       bty='o', cex=2, title = "Error Probability")
 dev.off()
 
 
@@ -86,14 +89,15 @@ row.names(perf.100k) <- c('500', '1000', '1500')
 row.names(perf.500k) <- c('500', '1000', '1500')
 
 png("../output/plots/plotPerformance.png", width = 1024, height = 1024)
+par(mar = c(5,5,5,5))
 plot(perf.100k[,2], perf.100k[,1], type="p", col="blue", xlab = "Memory in MB",
-     ylab = "Time in Seconds", xlim=c(300,1300), ylim=c(70, 180), pch=16, cex=1.5,
-     par(cex.lab=2))
-axis(2,cex.axis=1.2)
+     ylab = "Time in Seconds", xlim=c(300,1300), ylim=c(70, 180), pch=16,
+     cex=1.5, cex.lab=2, cex.axis=1.5)
+#axis(2,cex.axis=1.2)
 points(perf.500k[,2], perf.500k[,1], type="p", col="red", pch=16, cex=1.5)
 text(perf.100k[,2], perf.100k[,1], row.names(perf.100k), pos=3, cex=1, col="blue")
 text(perf.500k[,2], perf.500k[,1], row.names(perf.500k), pos=3, cex=1, col="red")
-title("Performance")
+title("Performance (Memory vs Time in sec.)", cex.main=2)
 legend("topleft", c('100.000', '500.000'), col=c('red', 'blue'), pch=16,
-       bty='o', cex=1, title = "Number of Reads")
+       bty='o', cex=2, title = "Number of Reads")
 dev.off()
