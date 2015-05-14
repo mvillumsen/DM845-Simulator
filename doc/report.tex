@@ -1,0 +1,67 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{amssymb,amsfonts, amsmath, textcomp}
+\usepackage{calc}
+\usepackage{ifthen}
+\usepackage{graphicx}
+\usepackage{listings, color}
+\usepackage{url}
+\linespread{1.5}
+
+\definecolor{dkgreen}{rgb}{0,0.45,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.30,0,0.30}
+
+% Default settings for code listings
+\lstset{frame=tb,
+  language=Java,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=left,
+  numberstyle=\footnotesize,
+  keywordstyle=\color{dkgreen}\bfseries,
+  commentstyle=\color{gray},
+  stringstyle=\color{mauve},
+  frame=single,
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=1
+}
+
+\title{\rule{12.5cm}{0.5mm}\\Advanced Algorithms in Computational Biology\\DM845}
+\author{Martin Østergaard Villumsen\\\texttt{mvill11@student.sdu.dk}\\\rule{6.5cm}{0.5mm}\\University of Southern Denmark\\}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+% \cite{whatshap}
+
+\section{Introduction}
+The human genome is diploid which means that each cell has two homologous copies of each chromosome, usually one from the mother and one from the father. In order to understand the genetic basis for different diseases (e.g. cancer) it is not sufficient to detect the single nucleotide polymorphisms (SNPs), we also need to phase the them, i.e. assign each SNP to the two copies of the chromosome. This is called phasing and current methods that phases directly from sequencing reads, suffers from the fact that the reads are too short \cite{whatshap}.
+
+In this project we will develop a simple read simulator, which generates reads that are much longer than those obtained from e.g. Next-Gen sequencing machines. We will simulate reads with different parameters such as read length and sequencing error probability and phase these reads using \textsc{WhatsHap}, a novel dynamic programming approach to haplotype assembly \cite{whatshap}.
+
+
+\subsection{Biological Problem}
+The biological problem is haplotype assembly from whole-genome sequence data, i.e. reconstructing haplotypes from a collection of sequenced reads. This is important for e.g. understanding the genetic basis for different diseases.
+\subsection{Computational Problem}
+Given a collection of sequenced reads that have been mapped to a referenced genome assembly they want to reconstruct the correct haplotypes for the reads. Each individual SNP has two alleles (one from each chromosome) - they want to assign each SNP to its corresponding chromosome.
+\section{Haplotype Assembly with WhatsHap}
+% Description of algorithms/methods used
+% Links to papers/data/software etc.
+% Description of data
+\section{Building a DNA Simulator}
+% My contributions
+\section{Results and Discussion}
+%% TODO: List of commands to recreate my results.
+\section{Conclusion}
+
+\addcontentsline{toc}{section}{References}
+\bibliography{whatshap}{}
+\bibliographystyle{abbrv}
+\end{document}
