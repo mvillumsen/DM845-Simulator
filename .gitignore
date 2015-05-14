@@ -1,3 +1,7 @@
 *.fa
 *.vcf
+*.aux
+*.log
+*.synctex
+*.Rhistory
 
