@@ -86,8 +86,8 @@ row.names(perf.100k) <- c('500', '1000', '1500')
 row.names(perf.500k) <- c('500', '1000', '1500')
 
 png("../output/plots/plotPerformance.png", width = 1024, height = 1024)
-plot(perf.100k[,2], perf.100k[,1], type="p", col="blue", xlab = "Time in Seconds",
-     ylab = "Memory in MB", xlim=c(300,1300), ylim=c(70, 180), pch=16, cex=1.5)
+plot(perf.100k[,2], perf.100k[,1], type="p", col="blue", xlab = "Memory in MB",
+     ylab = "Time in Seconds", xlim=c(300,1300), ylim=c(70, 180), pch=16, cex=1.5)
 points(perf.500k[,2], perf.500k[,1], type="p", col="red", pch=16, cex=1.5)
 text(perf.100k[,2], perf.100k[,1], row.names(perf.100k), pos=3, cex=1, col="blue")
 text(perf.500k[,2], perf.500k[,1], row.names(perf.500k), pos=3, cex=1, col="red")
