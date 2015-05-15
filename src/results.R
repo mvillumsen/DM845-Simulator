@@ -134,6 +134,6 @@ points(perf.500k[,2], perf.500k[,1], type="p", col="red", pch=16, cex=1.5)
 text(perf.100k[,2], perf.100k[,1], row.names(perf.100k), pos=3, cex=1, col="blue")
 text(perf.500k[,2], perf.500k[,1], row.names(perf.500k), pos=3, cex=1, col="red")
 title("Performance (Memory vs Time in sec.)", cex.main=2)
-legend("topleft", c('100.000', '500.000'), col=c('red', 'blue'), pch=16,
+legend("topleft", c('100.000', '500.000'), col=c('blue', 'red'), pch=16,
        bty='o', cex=2, title = "Number of Reads")
 dev.off()
