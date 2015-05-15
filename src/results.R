@@ -1,6 +1,46 @@
 library(ggplot2)
 setwd("~/Dropbox/SDU/8. semester/DM845/Project/DM845-Simulator/src")
 
+readLength <- c('500', '1000', '1500')
+errorProb <- c('0.05', '0.10', '0.15')
+
+unphasable100k <- rbind(
+    c(22915/190722, 24452/184634, 26343/178859),
+    c(227/344830, 568/334865, 954/325212),
+    c(1/469897, 9/457648, 24/445837))
+row.names(unphasable100k) <- readLength
+colnames(unphasable100k) <- errorProb
+unphasable500k <- rbind(
+    c(NA, 65726/640715, NA),
+    c(207/883588, 578/874403, 993/863965),
+    c(1/963613, NA, 12/953189))
+row.names(unphasable500k) <- readLength
+colnames(unphasable500k) <- errorProb
+
+png("../output/plots/unphasable100k.png", width = 1024, height = 1024)
+par(mar = c(5,5,5,5))
+plot(colnames(unphasable100k), unphasable100k[1,], type='b', xlab = 'Errors in %',
+     ylab = 'Unphasable positions in %', ylim=c(2.128126e-06, 0.15), col="green",
+     pch=16, cex=1.5, cex.lab=2, cex.axis=1.5)
+lines(colnames(unphasable100k), unphasable100k[2,], type='b', col="red", pch=16)
+lines(colnames(unphasable100k), unphasable100k[3,], type='b', col="blue", pch=16)
+title("Performance of Phasing with 100k Reads", cex.main=2)
+legend("topleft", rownames(unphasable100k), pch=16, col=c('green', 'red', 'blue'),
+       bty='o', cex=2, title = "Number of reads")
+dev.off()
+
+png("../output/plots/unphasable500k.png", width = 1024, height = 1024)
+par(mar = c(5,5,5,5))
+plot(colnames(unphasable500k), unphasable500k[1,], type='b', xlab = 'Errors in %',
+     ylab = 'Unphasable positions in %', ylim=c(1.037761e-06,0.1025823), col="green",
+     pch=16, cex=1.5, cex.lab=2, cex.axis=1.5)
+lines(colnames(unphasable500k), unphasable500k[2,], type='b', col="red", pch=16)
+lines(colnames(unphasable500k), unphasable500k[3,], type='b', col="blue", pch=16)
+title("Performance of Phasing with 500k Reads", cex.main=2)
+legend("topleft", rownames(unphasable500k), pch=16, col=c('green', 'red', 'blue'),
+       bty='o', cex=2, title = "Number of reads")
+dev.off()
+
 file_list <- list.files("../output/results/")
 
 for (file in file_list) {
@@ -26,9 +66,6 @@ for (i in 1:nrow(dataset)) {
 }
 
 ## Created manually
-readLength <- c('500', '1000', '1500')
-errorProb <- c('0.05', '0.10', '0.15')
-
 reads.100k <- rbind(
     c(83.372161, 84.153290, 84.938491),
     c(65.953661, 67.118105, 68.226144),
@@ -93,7 +130,6 @@ par(mar = c(5,5,5,5))
 plot(perf.100k[,2], perf.100k[,1], type="p", col="blue", xlab = "Memory in MB",
      ylab = "Time in Seconds", xlim=c(300,1300), ylim=c(70, 180), pch=16,
      cex=1.5, cex.lab=2, cex.axis=1.5)
-#axis(2,cex.axis=1.2)
 points(perf.500k[,2], perf.500k[,1], type="p", col="red", pch=16, cex=1.5)
 text(perf.100k[,2], perf.100k[,1], row.names(perf.100k), pos=3, cex=1, col="blue")
 text(perf.500k[,2], perf.500k[,1], row.names(perf.500k), pos=3, cex=1, col="red")
