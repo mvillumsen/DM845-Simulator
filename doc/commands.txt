@@ -3,9 +3,8 @@
 	for f in *.sam; do samtools view -bS $f | samtools sort - ${f%.sam}.sorted; done
 
 - Run whatshap
-	python3 -m whatshap chr1.vcf chr1.sorted.bam > phased.vcf
+	python3 -m whatshap --ignore-read-groups chr1.vcf chr1.sorted.bam > phased.vcf
 
 - Measure time/memory
-	/usr/bin/time -v -o outputFile.txt python3 -m whatshap chr1.vcf chr1.sorted.bam > chr1.out.vcf
+	/usr/bin/time -v -o outputFile.txt python3 -m whatshap --ignore-read-groups chr1.vcf chr1.sorted.bam > chr1.out.vcf
 	/usr/bin/time -f '%P %M %E' python....
-
